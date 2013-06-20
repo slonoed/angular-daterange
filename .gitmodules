@@ -1,0 +1,3 @@
+[submodule "bootstrap-daterangepicker"]
+	path = bootstrap-daterangepicker
+	url = git@github.com:dangrossman/bootstrap-daterangepicker.git
