@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US" ng-app="MyApp">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>A date range picker directive for angular and Twitter Bootstrap</title>
-    <link rel="stylesheet" type="text/css" media="all" href="bootstrap.css" />
-    <link rel="stylesheet" type="text/css" media="all" href="daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" media="all" href="daterangepicker.css"/>
     <script type="text/javascript" src="moment-2.0.0.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
     <script type="text/javascript" src="angular-1.0.7.js"></script>
 
@@ -15,13 +14,68 @@
 </head>
 <body>
 
+<script type="text/ng-template" id="calendar.html">
+    <div class="calendar">
+        <table class="table-condensed">
+            <thead>
+            <tr>
+                <th class="prev available" ng-click="setPrevMonth()">
+                    <i class="icon-arrow-left"></i>
+                </th>
+                <th colspan="5" style="width: auto">{{monthName}}{{left}}</th>
+                <th class="next available" ng-click="setNextMonth()">
+                    <i class="icon-arrow-right"></i>
+                </th>
+            </tr>
+            <tr>
+                <th ng-repeat="d in daysOfWeek">{{d}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="week in calendar">
+                <td class="available"
+                    ng-click="pickDate(day)"
+                    ng-repeat="day in week"
+                    ng-class="{off: isOff(day), startdate: day.isSame(startDate), enddate:day.isSame(endDate), inrange:inRange(day), active: isActive(day)}">
+                    {{getDayNumber(day)}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</script>
+
+<script type="text/ng-template" id="daterange.html">
+    <div>
+        <div ng-transclude ng-click="activate()" style="cursor:pointer"></div>
+        <div class="daterangepicker dropdown-menu opensright" ng-show="active">
+            <calendar sdate="startDate" edate="endDate" right></calendar>
+            <calendar sdate="startDate" edate="endDate" left></calendar>
+            <div class="confirm">
+                <button class="btn btn-success btn-small" ng-click="applyRange()">
+                    Apply
+                </button>
+                <button class="btn btn-small" ng-click="clearRange()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</script>
+
 <div class="container" ng-controller="MainCtrl">
     <div class="span12">
 
+        <h4>Calendar</h4>
+
+
         <h4>Simple Example</h4>
+
         <div class="well">
 
-                        <daterange start="range.start" finish="range.finish"></daterange>
+            <daterange start="range.start" finish="range.finish">
+                From {{getTimeStr(range.start)}} to {{getTimeStr(range.finish)}}
+            </daterange>
         </div>
 
 
