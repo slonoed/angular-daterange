@@ -22,8 +22,13 @@ angular.module('MyApp.directives', [])
                 };
 
                 scope.clearRange = function() {
-                    scope.startDate = moment(scope.startDateRaw);
+                    scope.startDate = moment(scope.startDateRaw).startOf('day');
                     scope.endDate = moment(scope.endDateRaw);
+
+                    // if end date not start of day - get next day start timestamp
+                    if (!scope.endDate.isSame(scope.endDate.startOf('day'))) {
+                        scope.endDate = scope.endDate.add(1, 'day').startOf('day');
+                    }
                 };
 
                 scope.cancel = function () {
@@ -34,8 +39,8 @@ angular.module('MyApp.directives', [])
                 scope.clearRange();
 
                 scope.toggle = function () {
-                    scope.active = !scope.active
-                }
+                    scope.active = !scope.active;
+                };
             }
         };
     }])
@@ -183,7 +188,12 @@ angular.module('MyApp.directives', [])
 
                 scope.isActive = function(day) {
                     // если календарь левый, то сверяем совпал ли день с startDate, если правый то с endDate
-                    return scope.left ? isSameDate(day, scope.startDate) : isSameDate(day, scope.endDate);
+//                    return scope.left ? isSameDate(day, scope.startDate) : isSameDate(day, scope.endDate);
+
+                    if (scope.left)
+                        return isSameDate(day, scope.startDate)
+                    else
+                        return isSameDate(day, scope.endDate)
                 };
 
 
