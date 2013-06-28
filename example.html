@@ -22,7 +22,7 @@
                 <th class="prev available" ng-click="setPrevMonth()">
                     <i class="icon-arrow-left"></i>
                 </th>
-                <th colspan="5" style="width: auto">{{monthName}}{{left}}</th>
+                <th colspan="5" style="width: auto">{{monthName}}</th>
                 <th class="next available" ng-click="setNextMonth()">
                     <i class="icon-arrow-right"></i>
                 </th>
@@ -36,7 +36,7 @@
                 <td class="available"
                     ng-click="pickDate(day)"
                     ng-repeat="day in week"
-                    ng-class="{off: isOff(day), startdate: day.isSame(startDate), enddate:day.isSame(endDate), inrange:inRange(day), active: isActive(day)}">
+                    ng-class="{off: isOff(day),  inrange:inRange(day), active: isActive(day)}">
                     {{getDayNumber(day)}}
                 </td>
             </tr>
@@ -47,16 +47,16 @@
 </script>
 
 <script type="text/ng-template" id="daterange.html">
-    <div>
-        <div ng-transclude ng-click="activate()" style="cursor:pointer"></div>
+    <div class="daterangepicker-container">
+        <div ng-transclude ng-click="toggle()" style="cursor:pointer"></div>
         <div class="daterangepicker dropdown-menu opensright" ng-show="active">
             <calendar sdate="startDate" edate="endDate" right></calendar>
             <calendar sdate="startDate" edate="endDate" left></calendar>
             <div class="confirm">
-                <button class="btn btn-success btn-small" ng-click="applyRange()">
+                <button class="btn btn-success btn-small" ng-click="apply()">
                     Apply
                 </button>
-                <button class="btn btn-small" ng-click="clearRange()">Cancel</button>
+                <button class="btn btn-small" ng-click="cancel()">Cancel</button>
             </div>
         </div>
     </div>
@@ -80,12 +80,12 @@
 
         <h4>Simple Example</h4>
 
-        <div class="well">
+        <!--<div class="well">-->
 
-            <daterange start="range.start" finish="range.finish">
-                <input type="text" ng-bind="range.start"/>
-            </daterange>
-        </div>
+            <!--<daterange start="range.start" finish="range.finish">-->
+                <!--<input type="text" ng-bind="range.start"/>-->
+            <!--</daterange>-->
+        <!--</div>-->
 
 
     </div>

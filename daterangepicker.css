@@ -1,3 +1,21 @@
+.daterangepicker-container {
+    position: relative;
+}
+
+
+.daterangepicker {
+    position: absolute;
+    top: 100%;
+    background: #fff;
+    left: 20px;
+    padding: 4px;
+    margin-top: 1px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+
 .daterangepicker.dropdown-menu {
     max-width: none;
 }
@@ -78,18 +96,6 @@
     padding: 4px;
     border-radius: 4px;
     background: #fff;
-}
-
-.daterangepicker {
-    position: static;
-    background: #fff;
-    top: 100px;
-    left: 20px;
-    padding: 4px;
-    margin-top: 1px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
 }
 
 .daterangepicker.opensleft:before {

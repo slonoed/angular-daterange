@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('MyApp.directives', [])
-    .directive('daterange', ['$compile', function($compile) {
+    .directive('daterange', ['$document', function($document) {
         return {
             restrict: 'E',
             replace: true,
@@ -13,21 +13,29 @@ angular.module('MyApp.directives', [])
             templateUrl: 'daterange.html',
             link: function(scope, element, attrs) {
                 scope.active = false;
-                scope.activate = function () {
-                    scope.active = true;
-                };
-                scope.applyRange = function() {
+
+
+                scope.apply = function() {
                     scope.startDateRaw = scope.startDate.toDate();
                     scope.endDateRaw = scope.endDate.toDate();
                     scope.active = false;
                 };
+
                 scope.clearRange = function() {
                     scope.startDate = moment(scope.startDateRaw);
                     scope.endDate = moment(scope.endDateRaw);
+                };
+
+                scope.cancel = function () {
+                    scope.clearRange();
                     scope.active = false;
                 };
 
                 scope.clearRange();
+
+                scope.toggle = function () {
+                    scope.active = !scope.active
+                }
             }
         };
     }])
@@ -96,6 +104,47 @@ angular.module('MyApp.directives', [])
         }
 
 
+        function isSameDate(f, s) {
+
+            f = new Date(f._d);
+            f.setSeconds(0);
+            f.setMilliseconds(0);
+            f.setMinutes(0);
+            s = new Date(s._d);
+            s.setSeconds(0);
+            s.setMilliseconds(0);
+            s.setMinutes(0);
+            return f.getTime() == s.getTime();
+        }
+
+        //is f before s?
+        function isDateBefore(f, s) {
+
+            f = new Date(f._d);
+            f.setSeconds(0);
+            f.setMilliseconds(0);
+            f.setMinutes(0);
+            s = new Date(s._d);
+            s.setSeconds(0);
+            s.setMilliseconds(0);
+            s.setMinutes(0);
+            return f.getTime() < s.getTime();
+        }
+
+        //is f after s?
+        function isDateAfter(f, s) {
+
+            f = new Date(f._d);
+            f.setSeconds(0);
+            f.setMilliseconds(0);
+            f.setMinutes(0);
+            s = new Date(s._d);
+            s.setSeconds(0);
+            s.setMilliseconds(0);
+            s.setMinutes(0);
+            return f.getTime() > s.getTime();
+        }
+
         return {
             restrict: 'E',
             replace: true,
@@ -108,9 +157,11 @@ angular.module('MyApp.directives', [])
                 scope.left = attrs.left === '';
 
 
+
+
                 scope.inRange = function(date) {
-                    return (date.isAfter(scope.startDate, 'day') && date.isBefore(scope.endDate, 'day')) ||
-                        date.isSame(scope.startDate, 'day') || date.isSame(scope.endDate, 'day');
+                    return (isDateAfter(date,scope.startDate) && isDateBefore(date,scope.endDate)) ||
+                        isSameDate(date, scope.startDate) || isSameDate(date, scope.endDate);
                 };
 
                 scope.getDayNumber = function(day) {
@@ -119,7 +170,7 @@ angular.module('MyApp.directives', [])
 
                 scope.isOff = function(day) {
                     var anotherMonth = day.month() != scope.current.month();
-                    var beforeStartInRight = !scope.left && day.isBefore(scope.startDate, 'day');
+                    var beforeStartInRight = !scope.left && isDateBefore(day, scope.startDate);
                     return anotherMonth || beforeStartInRight;
                 };
 
@@ -132,7 +183,7 @@ angular.module('MyApp.directives', [])
 
                 scope.isActive = function(day) {
                     // если календарь левый, то сверяем совпал ли день с startDate, если правый то с endDate
-                    return day.isSame(scope.left ? scope.startDate : scope.endDate, 'day');
+                    return scope.left ? isSameDate(day, scope.startDate) : isSameDate(day, scope.endDate);
                 };
 
 
@@ -148,7 +199,7 @@ angular.module('MyApp.directives', [])
                     if (!scope.left && date.isBefore(scope.startDate)) {
                         return;
                     }
-                    if (scope.left && date.isAfter(scope.endDate)) {
+                    if (scope.left && isDateAfter(date, scope.endDate)) {
                         scope.startDate = date;
                         scope.endDate = scope.startDate.clone().add(1, 'day');
                     }
