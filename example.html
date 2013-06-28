@@ -65,23 +65,27 @@
 
 <div class="container" ng-controller="MainCtrl">
     <div class="span12">
+        <h1>
+            <a href="https://github.com/SLonoed/angular-daterange" target="_blank">
+                angular-daterange directive
+            </a>
+        </h1>
+    </div>
+    <div class="span12">
 
-        <h4>Calendar</h4>
 
-
-        <h4>Simple Example</h4>
+        <h4>Simple Example with link</h4>
 
         <div class="well">
-                <div class="span4">
-
-                    <daterange start="range.start" finish="range.finish">
-                        <a class="btn btn-link"> From {{getTimeStr(range.start)}} to {{getTimeStr(range.finish)}}</a>
-                    </daterange>
-                </div>
+            <div class="span4">
+                <daterange start="range.start" finish="range.finish">
+                    <a class="btn btn-link"> From {{getTimeStr(range.start)}} to {{getTimeStr(range.finish)}}</a>
+                </daterange>
+            </div>
 
         </div>
 
-        <h4>Simple Example</h4>
+        <h4>Simple Example with input</h4>
 
         <div class="well">
 
