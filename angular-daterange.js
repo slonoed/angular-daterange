@@ -36,11 +36,15 @@ angular.module('MyApp.directives', [])
                     scope.active = false;
                 };
 
-                scope.clearRange();
-
                 scope.toggle = function () {
                     scope.active = !scope.active;
+                    // update date after open
+                    if (scope.active) {
+                        scope.clearRange();
+                    }
                 };
+
+                scope.clearRange();
             }
         };
     }])
