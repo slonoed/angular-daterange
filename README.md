@@ -8,6 +8,8 @@ Inspired by perfect [dangrossman/bootstrap-daterangepicker] [1]
 It use only angular and [momentjs].
 Also it use bootstrap CSS.
 
+[Simple demo] [2]
+
 Next steps:
 * Tests
 * Remove momentjs
@@ -16,4 +18,5 @@ Next steps:
 
 
   [1]: https://github.com/dangrossman/bootstrap-daterangepicker
+  [2]: http://slonoed.net/angular-daterange/
   [momentjs]: http://momentjs.com
