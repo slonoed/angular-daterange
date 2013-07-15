@@ -1,6 +1,22 @@
 'use strict';
-
+console.log('loaded')
 angular.module('MyApp.directives', [])
+    .service('dateProcessor', function() {
+        this.isSameDate = function(f, s) {
+
+            f = new Date(f._d);
+            f.setSeconds(0);
+            f.setMilliseconds(0);
+            f.setMinutes(0);
+            s = new Date(s._d);
+            s.setSeconds(0);
+            s.setMilliseconds(0);
+            s.setMinutes(0);
+            return f.getTime() == s.getTime();
+        };
+
+        this.one = 1;
+    })
     .directive('daterange', ['$document', function($document) {
         return {
             restrict: 'E',
@@ -31,12 +47,12 @@ angular.module('MyApp.directives', [])
                     }
                 };
 
-                scope.cancel = function () {
+                scope.cancel = function() {
                     scope.clearRange();
                     scope.active = false;
                 };
 
-                scope.toggle = function () {
+                scope.toggle = function() {
                     scope.active = !scope.active;
                     // update date after open
                     if (scope.active) {
@@ -48,7 +64,7 @@ angular.module('MyApp.directives', [])
             }
         };
     }])
-    .directive('calendar', [function() {
+    .directive('calendar', ['dateProcessor', function(dateProcessor) {
         var locale = {
             applyLabel: 'Apply',
             clearLabel: "Clear",
@@ -166,11 +182,9 @@ angular.module('MyApp.directives', [])
                 scope.left = attrs.left === '';
 
 
-
-
                 scope.inRange = function(date) {
-                    return (isDateAfter(date,scope.startDate) && isDateBefore(date,scope.endDate)) ||
-                        isSameDate(date, scope.startDate) || isSameDate(date, scope.endDate);
+                    return (isDateAfter(date, scope.startDate) && isDateBefore(date, scope.endDate)) ||
+                        dateProcessor.isSameDate(date, scope.startDate) || isSameDate(date, scope.endDate);
                 };
 
                 scope.getDayNumber = function(day) {
@@ -194,10 +208,12 @@ angular.module('MyApp.directives', [])
                     // если календарь левый, то сверяем совпал ли день с startDate, если правый то с endDate
 //                    return scope.left ? isSameDate(day, scope.startDate) : isSameDate(day, scope.endDate);
 
-                    if (scope.left)
+                    if (scope.left) {
                         return isSameDate(day, scope.startDate)
-                    else
+                    }
+                    else {
                         return isSameDate(day, scope.endDate)
+                    }
                 };
 
 
