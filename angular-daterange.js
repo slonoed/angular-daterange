@@ -1,18 +1,46 @@
 'use strict';
-console.log('loaded')
 angular.module('MyApp.directives', [])
     .service('dateProcessor', function() {
-        this.isSameDate = function(f, s) {
+        this.isSame = function(f, s) {
 
-            f = new Date(f._d);
+            f = new Date(f._d || f);
             f.setSeconds(0);
             f.setMilliseconds(0);
             f.setMinutes(0);
-            s = new Date(s._d);
+            f.setHours(0);
+            s = new Date(s._d || s);
             s.setSeconds(0);
             s.setMilliseconds(0);
             s.setMinutes(0);
+            s.setHours(0);
             return f.getTime() == s.getTime();
+        };
+
+        this.isBefore = function(f, s) {
+            f = new Date(f._d || f);
+            f.setSeconds(0);
+            f.setMilliseconds(0);
+            f.setMinutes(0);
+            f.setHours(0);
+            s = new Date(s._d || s);
+            s.setSeconds(0);
+            s.setMilliseconds(0);
+            s.setMinutes(0);
+            s.setHours(0);
+            return f.getTime() < s.getTime();
+        };
+
+        this.isAfter = function(f, s) {
+
+            f = new Date(f._d || f);
+            f.setSeconds(0);
+            f.setMilliseconds(0);
+            f.setMinutes(0);
+            s = new Date(s._d || s);
+            s.setSeconds(0);
+            s.setMilliseconds(0);
+            s.setMinutes(0);
+            return f.getTime() > s.getTime();
         };
 
         this.one = 1;
