@@ -7,8 +7,8 @@ describe('angular-daterange', function(){
         var first;
         var second;
         beforeEach(function () {
-            var $injector = angular.injector(['ng', 'MyApp.directives']);
-            dateProcessor = $injector.get('dateProcessor')
+            var $injector = angular.injector(['ng', 'slonoed.daterange']);
+            dateProcessor = $injector.get('slDateProcessor')
         });
 
 

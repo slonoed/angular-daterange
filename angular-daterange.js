@@ -1,6 +1,6 @@
 'use strict';
-angular.module('MyApp.directives', [])
-    .service('dateProcessor', function() {
+angular.module('slonoed.daterange', [])
+    .service('slDateProcessor', function() {
         this.isSame = function(f, s) {
 
             f = new Date(f._d || f);
@@ -45,7 +45,7 @@ angular.module('MyApp.directives', [])
 
         this.one = 1;
     })
-    .directive('daterange', ['$document', function($document) {
+    .directive('slDaterange', ['$document', function($document) {
         return {
             restrict: 'E',
             replace: true,
@@ -92,7 +92,7 @@ angular.module('MyApp.directives', [])
             }
         };
     }])
-    .directive('calendar', ['dateProcessor', function(dateProcessor) {
+    .directive('slCalendar', ['slDateProcessor', function(dateProcessor) {
         var locale = {
             applyLabel: 'Apply',
             clearLabel: "Clear",

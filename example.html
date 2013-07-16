@@ -50,8 +50,8 @@
     <div class="daterangepicker-container">
         <div ng-transclude ng-click="toggle()" style="cursor:pointer"></div>
         <div class="daterangepicker dropdown-menu opensright" ng-show="active">
-            <calendar sdate="startDate" edate="endDate" right></calendar>
-            <calendar sdate="startDate" edate="endDate" left></calendar>
+            <sl-calendar sdate="startDate" edate="endDate" right></sl-calendar>
+            <sl-calendar sdate="startDate" edate="endDate" left></sl-calendar>
             <div class="confirm">
                 <button class="btn btn-success btn-small" ng-click="apply()">
                     Apply
@@ -78,9 +78,9 @@
 
         <div class="well">
             <div class="span4">
-                <daterange start="range.start" finish="range.finish">
+                <sl-daterange start="range.start" finish="range.finish">
                     <a class="btn btn-link"> From {{getTimeStr(range.start)}} to {{getTimeStr(range.finish)}}</a>
-                </daterange>
+                </sl-daterange>
             </div>
 
         </div>
@@ -89,9 +89,9 @@
 
         <div class="well">
 
-            <daterange start="range.start" finish="range.finish">
+            <sl-daterange start="range.start" finish="range.finish">
                 <input type="text" ng-model="range.start"/>
-            </daterange>
+            </sl-daterange>
         </div>
 
 
