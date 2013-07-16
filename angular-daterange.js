@@ -157,46 +157,6 @@ angular.module('slonoed.daterange', [])
         }
 
 
-        function isSameDate(f, s) {
-
-            f = new Date(f._d);
-            f.setSeconds(0);
-            f.setMilliseconds(0);
-            f.setMinutes(0);
-            s = new Date(s._d);
-            s.setSeconds(0);
-            s.setMilliseconds(0);
-            s.setMinutes(0);
-            return f.getTime() == s.getTime();
-        }
-
-        //is f before s?
-        function isDateBefore(f, s) {
-
-            f = new Date(f._d);
-            f.setSeconds(0);
-            f.setMilliseconds(0);
-            f.setMinutes(0);
-            s = new Date(s._d);
-            s.setSeconds(0);
-            s.setMilliseconds(0);
-            s.setMinutes(0);
-            return f.getTime() < s.getTime();
-        }
-
-        //is f after s?
-        function isDateAfter(f, s) {
-
-            f = new Date(f._d);
-            f.setSeconds(0);
-            f.setMilliseconds(0);
-            f.setMinutes(0);
-            s = new Date(s._d);
-            s.setSeconds(0);
-            s.setMilliseconds(0);
-            s.setMinutes(0);
-            return f.getTime() > s.getTime();
-        }
 
         return {
             restrict: 'E',
@@ -211,8 +171,8 @@ angular.module('slonoed.daterange', [])
 
 
                 scope.inRange = function(date) {
-                    return (isDateAfter(date, scope.startDate) && isDateBefore(date, scope.endDate)) ||
-                        dateProcessor.isSameDate(date, scope.startDate) || isSameDate(date, scope.endDate);
+                    return (dateProcessor.isAfter(date, scope.startDate) && dateProcessor.isBefore(date, scope.endDate)) ||
+                        dateProcessor.isSame(date, scope.startDate) || dateProcessor.isSame(date, scope.endDate);
                 };
 
                 scope.getDayNumber = function(day) {
@@ -221,7 +181,7 @@ angular.module('slonoed.daterange', [])
 
                 scope.isOff = function(day) {
                     var anotherMonth = day.month() != scope.current.month();
-                    var beforeStartInRight = !scope.left && isDateBefore(day, scope.startDate);
+                    var beforeStartInRight = !scope.left && dateProcessor.isBefore(day, scope.startDate);
                     return anotherMonth || beforeStartInRight;
                 };
 
@@ -233,14 +193,12 @@ angular.module('slonoed.daterange', [])
 
 
                 scope.isActive = function(day) {
-                    // если календарь левый, то сверяем совпал ли день с startDate, если правый то с endDate
-//                    return scope.left ? isSameDate(day, scope.startDate) : isSameDate(day, scope.endDate);
-
+                    // on left calendar check with startDate, on right - with endDate
                     if (scope.left) {
-                        return isSameDate(day, scope.startDate)
+                        return dateProcessor.isSame(day, scope.startDate)
                     }
                     else {
-                        return isSameDate(day, scope.endDate)
+                        return dateProcessor.isSame(day, scope.endDate)
                     }
                 };
 
@@ -257,7 +215,7 @@ angular.module('slonoed.daterange', [])
                     if (!scope.left && date.isBefore(scope.startDate)) {
                         return;
                     }
-                    if (scope.left && isDateAfter(date, scope.endDate)) {
+                    if (scope.left && dateProcessor.isAfter(date, scope.endDate)) {
                         scope.startDate = date;
                         scope.endDate = scope.startDate.clone().add(1, 'day');
                     }
