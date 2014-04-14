@@ -18,5 +18,5 @@ Next steps:
 
 
   [1]: https://github.com/dangrossman/bootstrap-daterangepicker
-  [2]: http://slonoed.net/angular-daterange/
+  [2]: http://slonoed.net/angular-daterange/example.html
   [momentjs]: http://momentjs.com
