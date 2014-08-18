@@ -100,8 +100,8 @@ angular.module('slonoed.daterange', [])
             toLabel: 'To',
             weekLabel: 'W',
             customRangeLabel: 'Custom Range',
-            daysOfWeek: moment()._lang._weekdaysMin,
-            monthNames: moment()._lang._monthsShort,
+            daysOfWeek: moment().localeData()._weekdaysMin, 
+            monthNames: moment().localeData()._monthsShort,
             firstDay: 0
         };
 
@@ -204,7 +204,7 @@ angular.module('slonoed.daterange', [])
 
 
                 scope.locale = locale;
-                scope.daysOfWeek = moment()._lang._weekdaysMin;
+                scope.daysOfWeek = moment().localeData()._weekdaysMin;
 
 
                 scope.current = moment([scope.startDate.year(), scope.startDate.month(), 1]);
