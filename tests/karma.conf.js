@@ -11,7 +11,7 @@ files = [
     JASMINE,
     JASMINE_ADAPTER,
 
-    '../moment-2.0.0.js',
+    '../moment-2.8.1.js',
     '../angular-1.0.7.js',
     '../angular-daterange.js',
 
